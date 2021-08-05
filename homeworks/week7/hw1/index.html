@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+ <html lang="en">
+   <head>
+     <meta charset="UTF-8" />
+     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+     <title>新拖延運動報名表</title>
+     <link rel="stylesheet" href="https://necolas.github.io/normalize.css/8.0.1/normalize.css" />
+     <style>
+         * {
+   position: relative;
+   box-sizing: border-box;
+   font-size: 14px;
+   /* outline: 1px solid gold; */
+ }
+ body {
+   background-color: rgb(240, 240, 240);
+ }
+ .wrapper {
+   border-top: 6px solid #fad312;
+   max-width: 645px;
+   margin: 10% auto;
+   background-color: rgb(255, 255, 255);
+   box-shadow: 1.8px 2.4px 5px 0px rgba(0, 0, 0, 0.3);
+   padding: 64px 42px;
+ }
+ .apply-form__title {
+   margin: 0;
+   font-size: 36px;
+ }
+ .apply-form__content {
+   margin-top: 32px;
+   line-height: 1.5em;
+ }
+ .apply-form__alert {
+   color: #e74149;
+   margin-top: 20px;
+   margin-bottom: 40px;
+ }
+ .input-block {
+   margin-bottom: 50px;
+ }
+ .input-block__title {
+   font-size: 20px;
+   font-weight: normal;
+   margin-bottom: 18px;
+ }
+ .input-block--required .input-block__title::after {
+   content: ' *';
+   color: #e74149;
+ }
+ .input-block input {
+   padding: 7px;
+   border: 1px solid #d0d0d0;
+ }
+ .input-block--alert {
+   color: #e74149;
+   padding-top: 8px;
+   position: absolute;
+   font-size: 12px;
+ }
+ .hide-error .input-block--alert {
+   visibility: hidden;
+ }
+ .apply-form__submit input {
+   border: 0 none;
+   background-color: #fad312;
+   border-radius: 3px;
+   display: block;
+   width: 92px;
+   height: 40px;
+   cursor: pointer;
+ }
+ footer {
+   font-size: 13px;
+   text-align: center;
+   color: #999999;
+   padding: 24px 12px;
+   background-color: black;
+ }
+ /* media-query */
+ @media only screen and (max-device-width: 768px) {
+   .wrapper {
+     width: 90%;
+   }
+ }
+     </style>
+   </head>
+   <body>
+     <div class="wrapper">
+         <h1 class="apply-form__title">新拖延運動報名表單</h1>
+         <div class="apply-form__content">
+           活動日期：2020/12/10 ~ 2020/12/11</br>
+           活動地點：台北市大安區新生南路二段1號
+           <p class="apply-form__alert">*必填</p>
+         </div>
+         <form class="apply-form">
+         <div class="input-block input-block--required hide-error" >
+           <div class="input-block__title">暱稱</div>
+           <input type="text" name="nickname" placeholder="您的回答" />
+          <div class="input-block--alert">請輸入暱稱</div>
+         </div>
+         <div class="input-block input-block--required hide-error">
+           <div class="input-block__title">電子郵件</div>
+           <input type="email" name="email" placeholder="您的電子郵件" />
+           <div class="input-block--alert">請輸入電子郵件</div>
+         </div>
+         <div class="input-block input-block--required hide-error">
+           <div class="input-block__title">手機號碼</div>
+           <input type="tel" name="phoneNumber" placeholder="您的手機號碼" />
+           <div class="input-block--alert">請輸入手機號碼</div>
+         </div>
+         <div class="input-block input-block--required hide-error">
+           <div class="input-block__title">報名類型</div>
+           <label><input type="radio" name="register-type" value='lying in bed'/>
+           躺在床上用想像力實作</label><br /><br />
+           <label><input type="radio" name="register-type" value='lying on the floor' />
+           趴在地上滑手機找現成的</label>
+           <div class="input-block--alert">請選擇報名類型</div>
+         </div>
+         <div class="input-block input-block--required hide-error">
+           <div class="input-block__title">怎麼知道這個活動的</div>
+           <input type="text" name='how-to-know' placeholder="您的回答" />
+            <div class="input-block--alert">請輸入回答</div>
+         </div>
+         <div class="input-block">
+           <div class="input-block__title">其他</div>
+           <p>對活動的一些建議</p>
+           <input type="text" placeholder="您的回答" />
+         </div>
+         <div class="apply-form__submit">
+           <input type="submit"/>
+         </div>
+         <div class="apply-form__content">請勿透過表單送出您的密碼。</div>
+       </form>
+     </div>
+     <footer>© 2020 © Copyright. All rights Reserved.</footer>
+     <script >
+         document.querySelector('form').addEventListener('submit', (e) => {
+   e.preventDefault()
+   const elements = document.querySelectorAll('.input-block--required')
+   const returnData = {}
+   let hasError = false
+   for (const element of elements) {
+     let isValid = false
+
+     // 選到各種類型的 input
+     const input = element.querySelector('input[type=text]')
+     const email = element.querySelector('input[type=email]')
+     const tel = element.querySelector('input[type=tel]')
+     const radios = element.querySelectorAll('input[type=radio]')
+
+     if (input) {
+       if (input.value) {
+         returnData[input.name] = input.value
+         isValid = true
+       }
+     } else if (email) {
+       if (email.value) {
+         returnData[email.name] = email.value
+         isValid = true
+       }
+     } else if (tel) {
+       if (tel.value) {
+         returnData[tel.name] = tel.value
+         isValid = true
+       }
+     } else if (radios.length) {
+       for (const radio of radios) {
+         if (radio.checked) {
+           isValid = true
+           returnData[radio.name] = radio.parentNode.innerText
+           break
+         }
+       }
+     } else continue
+     if (!isValid) {
+       element.classList.remove('hide-error')
+       hasError = true
+     } else {
+       element.classList.add('hide-error')
+     }
+   }
+   if (!hasError) {
+     alert(JSON.stringify(returnData))
+   }
+ })
+     </script>
+   </body>
+ </html>
